@@ -1,8 +1,8 @@
-Feature: display list of movies sorted by different criteria
+Feature: display list of movies filtered and sorted
 
-  As an avid moviegoer
-  So that I can quickly browse movies based on my preferences
-  I want to see movies sorted by title or release date
+  As a moviegoer
+  So that I can browse movies based on my preferences
+  I want to filter movies by MPAA rating and sort them by title or release date
 
 Background: movies have been added to database
 
@@ -22,12 +22,26 @@ Background: movies have been added to database
   And I am on the RottenPotatoes home page
   Then 10 seed movies should exist
 
+Scenario: restrict to movies with "PG" or "R" ratings
+  When I check the following ratings: PG, R
+  And I uncheck the following ratings: G, PG-13
+  And I press "Refresh"
+  Then I should see the following movies: The Terminator, When Harry Met Sally, Amelie, The Incredibles, Raiders of the Lost Ark
+  And I should not see the following movies: Aladdin, The Help, Chocolat, 2001: A Space Odyssey, Chicken Run
+
+Scenario: all ratings selected
+  When I check the following ratings: G, PG, PG-13, R
+  And I press "Refresh"
+  Then I should see all the movies
+
 Scenario: sort movies alphabetically
   When I follow "Movie Title"
-  # your steps here
-  Then complete the rest of of this scenario
+  Then I should see "2001: A Space Odyssey" before "Aladdin"
+  And I should see "Aladdin" before "Amelie"
+  And I should see "Amelie" before "Chicken Run"
 
 Scenario: sort movies in increasing order of release date
   When I follow "Release Date"
-  # your steps here
-  Then complete the rest of of this scenario
+  Then I should see "2001: A Space Odyssey" before "Raiders of the Lost Ark"
+  And I should see "Raiders of the Lost Ark" before "The Terminator"
+  And I should see "The Terminator" before "When Harry Met Sally"
