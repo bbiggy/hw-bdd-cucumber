@@ -1,7 +1,15 @@
 <!--  This file is app/views/movies/index.html.erb -->
-<h2>All Movies</h2>
 
-<%#  Part 2: Start here... %>
+<div class="d-flex justify-content-between align-items-center">
+  <h2>All Movies</h2>
+  <div>
+    <% if user_signed_in? %>
+      <%= link_to 'Sign Out', destroy_user_session_path, method: :delete, class: 'btn btn-danger' %>
+    <% else %>
+      <%= link_to 'Login', new_user_session_path, class: 'btn btn-primary' %>
+    <% end %>
+  </div>
+</div>
 
 <%= form_tag movies_path, method: :get, id: 'ratings_form' do %>
   <%= hidden_field_tag 'sort_by', @sort_by %>

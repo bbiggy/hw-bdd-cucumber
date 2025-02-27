@@ -1,0 +1,14 @@
+<h2>Write a Review for <%= @movie.title %></h2>
+
+<%= form_for [@movie, @review] do |f| %>
+  <div class="form-group">
+    <%= f.label :rating %>
+    <%= f.select :rating, [1, 2, 3, 4, 5], {}, class: 'form-control' %>
+  </div>
+  <div class="form-group">
+    <%= f.label :comment %>
+    <%= f.text_area :comment, class: 'form-control' %>
+  </div>
+  <%= f.submit 'Submit Review', class: 'btn btn-primary' %>
+<% end %>
+<%= link_to 'Back to movie', movie_path(@movie), class: 'btn btn-secondary' %>

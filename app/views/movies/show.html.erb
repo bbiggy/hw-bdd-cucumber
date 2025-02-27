@@ -17,8 +17,25 @@
   <%= @movie.description %>
 </p>
 
+<h3>Reviews:</h3>
+<% if @movie.reviews.any? %>
+  <ul>
+    <% @movie.reviews.each do |review| %>
+      <li>
+        <strong>Rating:</strong> <%= review.rating %> <br>
+        <strong>Comment:</strong> <%= review.comment %> <br>
+        <strong>Reviewed by:</strong> <%= review.user.email %> <br>
+        <strong>Reviewed on:</strong> <%= review.created_at.strftime("%B %d, %Y") %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>No reviews yet.</p>
+<% end %>
+
 <div class="row">
   <%= link_to 'Edit', edit_movie_path(@movie), class: 'btn btn-primary col-2' %>
   <%= link_to 'Delete', movie_path(@movie), 'data-method': 'delete', 'data-confirm': 'Are you sure?', class: 'btn btn-danger col-2' %>
   <%= link_to 'Back to movie list', movies_path, class: 'btn btn-primary col-2' %>
+  <%= link_to 'Review', new_movie_review_path(@movie), class: 'btn btn-info col-2' %>
 </div>

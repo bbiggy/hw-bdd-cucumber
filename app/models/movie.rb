@@ -1,4 +1,5 @@
 class Movie < ActiveRecord::Base
+  has_many :reviews, dependent: :destroy
   def self.all_ratings
     %w[G PG PG-13 R]
   end
